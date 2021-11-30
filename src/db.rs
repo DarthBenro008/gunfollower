@@ -33,7 +33,10 @@ impl FollowersDatabase {
                     let followers_list: FollowersList = serde_json::from_str(&value)?;
                     Ok(followers_list)
                 }
-                Err(err) => Err(Error::new(ErrorKind::Other, "Cannot fetch from database")),
+                Err(_) => Err(Error::new(
+                    ErrorKind::Other,
+                    "Cannot fetch data from database",
+                )),
             },
             None => Err(Error::new(ErrorKind::Other, "Cannot fetch from database")),
         }
@@ -48,14 +51,14 @@ impl FollowersDatabase {
         match self.db.get("username_data")? {
             Some(bytes) => match String::from_utf8(bytes.to_vec()) {
                 Ok(value) => Ok(value),
-                Err(error) => Err(Error::new(ErrorKind::Other, "Error converting from array")),
+                Err(_) => Err(Error::new(ErrorKind::Other, "Error converting from array")),
             },
             None => Err(Error::new(ErrorKind::Other, "Cannot fetch from database")),
         }
     }
 
     pub fn get_is_first(&self) -> Result<String, Error> {
-        match self.db.get("isfirst")? {
+        match self.db.get("isFirst")? {
             Some(bytes) => Ok(String::from_utf8(bytes.to_vec()).unwrap()),
             None => Err(Error::new(ErrorKind::Other, "Cannot fetch from database")),
         }

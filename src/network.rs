@@ -34,9 +34,12 @@ impl ApiClient {
                 "https://api.github.com/users/{username}",
                 username = username,
             ))
-            .send()?
-            .json::<User>()?;
-        Ok(resp)
+            .send()?;
+        if resp.status() != 200 {
+            return Err("Please enter a valid GitHub username".into());
+        }
+        let data = resp.json::<User>()?;
+        Ok(data)
     }
 
     pub fn get_user_followers(
@@ -53,12 +56,15 @@ impl ApiClient {
                     url = url,
                     page = page,
                 ))
-                .send()?
-                .json::<FollowersList>()?;
-            if resp.len() == 0 {
+                .send()?;
+            if resp.status() != 200 {
+                return Err("GitHub rate limiter hit, please try again after an hour!".into());
+            }
+            let data = resp.json::<FollowersList>()?;
+            if data.len() == 0 {
                 break;
             }
-            followerlist.extend(resp);
+            followerlist.extend(data);
             page = page + 1;
         }
         Ok(followerlist)

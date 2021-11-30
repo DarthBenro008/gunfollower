@@ -3,11 +3,13 @@ mod db;
 mod handlers;
 mod models;
 mod network;
+mod printer;
 
 use cli::{CommandLineArgs, Commands};
 use db::FollowersDatabase;
 use handlers::*;
 use network::ApiClient;
+use printer::print_error;
 use structopt::StructOpt;
 
 fn main() {
@@ -17,15 +19,15 @@ fn main() {
     match cmd {
         Commands::Check => match check_handler(&followers_db, &api) {
             Ok(_) => return,
-            Err(err) => println!("error {}", err),
+            Err(err) => print_error("Failed to check who unfollowed you", &err),
         },
         Commands::Clear => match clear_handler(&followers_db) {
             Ok(_) => return,
-            Err(err) => println!("error {}", err),
+            Err(err) => print_error("Failed to clear database", &err),
         },
         Commands::Status => match status_handler(&followers_db, &api) {
             Ok(_) => return,
-            Err(err) => println!("error {}", err),
+            Err(err) => print_error("Failed to fetch status", &err),
         },
     }
 }
