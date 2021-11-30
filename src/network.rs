@@ -36,7 +36,6 @@ impl ApiClient {
             ))
             .send()?
             .json::<User>()?;
-        println!("{:#?}", resp);
         Ok(resp)
     }
 
