@@ -2,8 +2,13 @@
 name = "gunfollower"
 version = "0.1.0"
 edition = "2021"
-
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+readme = "README.md"
+authors = ["Hemanth Krishna <hkpdev008@gmail.com>"]
+license = "MIT"
+homepage = "https://github.com/DarthBenro008/gunfollower"
+repository = "https://github.com/DarthBenro008/gunfollower"
+keywords = ["cli", "github", "unfollow", "social"]
+categories = ["command-line-utilities"]
 
 [dependencies]
 structopt = "0.3.25"
