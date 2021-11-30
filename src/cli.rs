@@ -1,0 +1,24 @@
+use structopt::StructOpt;
+
+#[derive(Debug, StructOpt, PartialEq)]
+/// An CLI that helps you track who unfollowed you, written purely in Rust
+///         
+///        * Gun on those who unfollowed you!
+///        * Has powerlevel10k integration and support
+///
+/// Developed by Hemanth Krishna (https://github.com/DarthBenro008)
+#[structopt(
+    name = "gunfollower",
+    about = "A simple CLI to check who unfollowed you on github",
+    verbatim_doc_comment
+)]
+pub struct CommandLineArgs {
+    #[structopt(subcommand)]
+    pub cmd: Commands,
+}
+
+#[derive(Debug, StructOpt, PartialEq)]
+pub enum Commands {
+    /// Checks who unfollowed you
+    Check,
+}
