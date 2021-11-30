@@ -21,4 +21,8 @@ pub struct CommandLineArgs {
 pub enum Commands {
     /// Checks who unfollowed you
     Check,
+    /// Gives the status of the connected account,
+    Status,
+    /// Clears the connected account and the followers database
+    Clear,
 }
