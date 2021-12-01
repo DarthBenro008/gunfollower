@@ -1,4 +1,5 @@
 use crate::models::followers::FollowersList;
+use chrono::prelude::*;
 use std::io::{Error, ErrorKind};
 
 pub struct FollowersDatabase {
@@ -21,6 +22,7 @@ impl FollowersDatabase {
     }
 
     pub fn insert_followers(&self, followers: FollowersList) -> Result<(), Error> {
+        self.insert_last_update_time()?;
         let data = serde_json::to_string(&followers)?;
         self.db.insert("followers_data", data.as_bytes())?;
         Ok(())
@@ -56,7 +58,6 @@ impl FollowersDatabase {
             None => Err(Error::new(ErrorKind::Other, "Cannot fetch from database")),
         }
     }
-
     pub fn get_is_first(&self) -> Result<String, Error> {
         match self.db.get("isFirst")? {
             Some(bytes) => Ok(String::from_utf8(bytes.to_vec()).unwrap()),
@@ -67,6 +68,44 @@ impl FollowersDatabase {
     pub fn set_is_first(&self, value: String) -> Result<(), Error> {
         self.db.insert("isFirst", value.as_bytes())?;
         Ok(())
+    }
+
+    pub fn insert_last_update_time(&self) -> Result<(), Error> {
+        let utc: DateTime<Utc> = Utc::now();
+        let bytes = &utc.timestamp_millis().to_string();
+        self.db.insert("token_time", bytes.as_bytes())?;
+        Ok(())
+    }
+
+    pub fn get_last_update_time(&self) -> Result<String, Error> {
+        match self.db.get("token_time")? {
+            Some(bytes) => {
+                let timestring = String::from_utf8(bytes.to_vec()).unwrap();
+                let timestamp = timestring.parse::<i64>().unwrap();
+                let naive = NaiveDateTime::from_timestamp(timestamp, 0);
+                let datetime: DateTime<Utc> = DateTime::from_utc(naive, Utc);
+                let newdate = datetime.format("%Y-%m-%d %H:%M:%S");
+                Ok(newdate.to_string())
+            }
+            None => Err(Error::new(ErrorKind::Other, "Cannot de-serialize time")),
+        }
+    }
+
+    pub fn is_refresh_required(&self) -> Result<bool, Error> {
+        match self.db.get("token_time")? {
+            Some(bytes) => {
+                let timestring = String::from_utf8(bytes.to_vec()).unwrap();
+                let timestamp = timestring.parse::<i64>().unwrap();
+                let utc: DateTime<Utc> = Utc::now();
+                let current_time = utc.timestamp_millis();
+                if (current_time - timestamp) > 1_800_000 {
+                    Ok(true)
+                } else {
+                    Ok(false)
+                }
+            }
+            None => Err(Error::new(ErrorKind::Other, "Cannot de-serialize time")),
+        }
     }
 
     pub fn nuke_db(&self) -> Result<(), Error> {

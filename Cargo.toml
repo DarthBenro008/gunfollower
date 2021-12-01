@@ -22,3 +22,7 @@ console = "0.15.0"
 [dependencies.serde]  
 version = "1.0.64"
 features = ["derive"]
+
+[dependencies.chrono]
+version = "0.4.19"
+features = ["serde"]
