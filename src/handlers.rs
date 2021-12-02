@@ -26,7 +26,8 @@ pub fn check_handler(
             .cloned()
             .collect();
         print_followers_unfollowers(new_followers, unfollowers);
-        print_ok(format!("You currently have {} followers", followers.len()));
+        print_ok(format!("You currently have {} followers", &followers.len()));
+        followers_db.insert_followers(followers)?;
     } else {
         let offline_db = followers_db.get_followers()?;
         let followerlist: FollowersList = Vec::new();

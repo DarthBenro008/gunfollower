@@ -1,5 +1,6 @@
 use crate::models::followers::FollowersList;
-use chrono::prelude::*;
+use chrono::prelude::{DateTime, Utc};
+use chrono::NaiveDateTime;
 use std::io::{Error, ErrorKind};
 
 pub struct FollowersDatabase {
@@ -72,7 +73,7 @@ impl FollowersDatabase {
 
     pub fn insert_last_update_time(&self) -> Result<(), Error> {
         let utc: DateTime<Utc> = Utc::now();
-        let bytes = &utc.timestamp_millis().to_string();
+        let bytes = &utc.timestamp().to_string();
         self.db.insert("token_time", bytes.as_bytes())?;
         Ok(())
     }
@@ -82,10 +83,9 @@ impl FollowersDatabase {
             Some(bytes) => {
                 let timestring = String::from_utf8(bytes.to_vec()).unwrap();
                 let timestamp = timestring.parse::<i64>().unwrap();
-                let naive = NaiveDateTime::from_timestamp(timestamp, 0);
-                let datetime: DateTime<Utc> = DateTime::from_utc(naive, Utc);
-                let newdate = datetime.format("%Y-%m-%d %H:%M:%S");
-                Ok(newdate.to_string())
+                let time = NaiveDateTime::from_timestamp(timestamp, 0);
+                let newdate = format!("{} {}", time.date(), time.time());
+                Ok(newdate)
             }
             None => Err(Error::new(ErrorKind::Other, "Cannot de-serialize time")),
         }
@@ -97,8 +97,8 @@ impl FollowersDatabase {
                 let timestring = String::from_utf8(bytes.to_vec()).unwrap();
                 let timestamp = timestring.parse::<i64>().unwrap();
                 let utc: DateTime<Utc> = Utc::now();
-                let current_time = utc.timestamp_millis();
-                if (current_time - timestamp) > 1_800_000 {
+                let current_time = utc.timestamp();
+                if (current_time - timestamp) > 1800 {
                     Ok(true)
                 } else {
                     Ok(false)
