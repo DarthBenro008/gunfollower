@@ -35,8 +35,8 @@ cargo install gunfollower
 
 You can also download the binary and install it manually.
 
-- Go to [releases page](https://github.com/DarthBenro008/gunfollower/releases) and grab the latest release of rChore.
-- Download the latest release of rChore specific to your OS.
+- Go to [releases page](https://github.com/DarthBenro008/gunfollower/releases) and grab the latest release of gunfollower.
+- Download the latest release of gunfollower specific to your OS.
 - If you are on Linux/MacOS, make sure you move the binary to somewhere in your `$PATH` (e.g. `/usr/local/bin`).
 
 ## Architecture

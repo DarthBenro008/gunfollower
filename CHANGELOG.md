@@ -6,7 +6,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Releases]
 
-## [1.0.0] - 2021-12-04
+## [0.1.1] - 2021-12-04
+
+## Homebrew Support Patch Release
+
+### Features
+
+- Patch to `releaser.yaml` CI to support binary builds that can be published to homebrew by @DarthBenro008
+
+## [0.1.0] - 2021-12-04
 
 ## Initial Release
 
