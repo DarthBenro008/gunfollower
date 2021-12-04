@@ -16,6 +16,13 @@ A simple CLI that tell watches and let's you know if anyone has followed or unfo
 
 ## Installation
 
+### Using Homebrew
+
+```bash
+brew tap DarthBenro008/gunfollower
+brew install gunfollower
+```
+
 ### Using Cargo
 
 You can install gunfollower from Cargo
