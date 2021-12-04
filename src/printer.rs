@@ -19,14 +19,14 @@ pub fn print_ok(data: String) {
 }
 
 pub fn print_followers_unfollowers(new_followers: FollowersList, unfollowers: FollowersList) {
-    if new_followers.len() == 0 && unfollowers.len() == 0 {
+    if new_followers.is_empty() && unfollowers.is_empty() {
         println!(
             "{}",
             style("😎 Chill! No one unfollowed or followed you!".to_string()).green()
         );
         return;
     }
-    if new_followers.len() > 0 {
+    if !new_followers.is_empty() {
         println!(
             "{}",
             style("🤝 New folks who followed you :")
@@ -42,7 +42,7 @@ pub fn print_followers_unfollowers(new_followers: FollowersList, unfollowers: Fo
             );
         }
     }
-    if unfollowers.len() > 0 {
+    if !unfollowers.is_empty() {
         println!(
             "{}",
             style("😫 Folks who unfollowed you: ")

@@ -18,15 +18,15 @@ fn main() {
     let api = ApiClient::new();
     match cmd {
         Commands::Check => match check_handler(&followers_db, &api) {
-            Ok(_) => return,
+            Ok(_) => {}
             Err(err) => print_error("Failed to check who unfollowed you", &err),
         },
         Commands::Clear => match clear_handler(&followers_db) {
-            Ok(_) => return,
+            Ok(_) => {}
             Err(err) => print_error("Failed to clear database", &err),
         },
         Commands::Status => match status_handler(&followers_db, &api) {
-            Ok(_) => return,
+            Ok(_) => {}
             Err(err) => print_error("Failed to fetch status", &err),
         },
     }
