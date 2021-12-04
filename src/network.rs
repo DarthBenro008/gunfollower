@@ -61,11 +61,11 @@ impl ApiClient {
                 return Err("GitHub rate limiter hit, please try again after an hour!".into());
             }
             let data = resp.json::<FollowersList>()?;
-            if data.len() == 0 {
+            if data.is_empty() {
                 break;
             }
             followerlist.extend(data);
-            page = page + 1;
+            page += 1;
         }
         Ok(followerlist)
     }

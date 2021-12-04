@@ -82,7 +82,7 @@ fn is_first(
             let data = network_api.get_user_data(username.to_string())?;
             let followers = network_api.get_user_followers(generate_followers_url(data.login))?;
             followers_db.insert_followers(followers)?;
-            followers_db.insert_username(username.to_string())?;
+            followers_db.insert_username(username)?;
             followers_db.set_is_first("gunned and loaded".to_string())?;
             Ok(())
         }
