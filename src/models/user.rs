@@ -39,7 +39,7 @@ pub struct User {
     pub blog: String,
     pub location: String,
     pub email: Option<String>,
-    pub hireable: Option<String>,
+    pub hireable: Option<bool>,
     pub bio: String,
     #[serde(rename = "twitter_username")]
     pub twitter_username: String,
