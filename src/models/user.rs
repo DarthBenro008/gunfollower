@@ -36,13 +36,13 @@ pub struct User {
     pub site_admin: bool,
     pub name: String,
     pub company: Option<String>,
-    pub blog: String,
-    pub location: String,
+    pub blog: Option<String>,
+    pub location: Option<String>,
     pub email: Option<String>,
     pub hireable: Option<bool>,
-    pub bio: String,
+    pub bio: Option<String>,
     #[serde(rename = "twitter_username")]
-    pub twitter_username: String,
+    pub twitter_username: Option<String>,
     #[serde(rename = "public_repos")]
     pub public_repos: i64,
     #[serde(rename = "public_gists")]
