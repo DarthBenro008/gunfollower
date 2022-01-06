@@ -14,7 +14,7 @@ use structopt::StructOpt;
 )]
 pub struct CommandLineArgs {
     #[structopt(subcommand)]
-    pub cmd: Commands,
+    pub cmd: Option<Commands>,
 }
 
 #[derive(Debug, StructOpt, PartialEq)]

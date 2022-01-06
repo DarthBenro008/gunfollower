@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Releases]
 
+## [0.1.4] - 2022-01-06
+
+### Enable Gunfollower default command and enhanced CI
+
+#### Features
+
+- Now you can simply run `gunfollower` instead of `gunfollower check`
+- Automatic CI to bump and update Homebrew releases
+
 ## [0.1.3] - 2021-12-08
 
 ### Nullable Fields fix of various user data
