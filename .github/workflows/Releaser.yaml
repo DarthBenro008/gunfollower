@@ -67,3 +67,25 @@ jobs:
           body_path: CHANGELOG.md
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  homebrew:
+    needs: changelog
+    name: Bump Homebrew formula
+    runs-on: ubuntu-latest
+    steps:
+      - name: Extract version
+        id: extract-version
+        run: |
+          printf "::set-output name=%s::%s\n" tag-name "${GITHUB_REF#refs/tags/}"
+      - uses: mislav/bump-homebrew-formula-action@v1
+        if: "!contains(github.ref, '-')" # skip prereleases
+        with:
+          formula-name: gunfollower
+          homebrew-tap: DarthBenro008/homebrew-gunfollower
+          base-branch: master
+          download-url: https://github.com/DarthBenro008/gunfollower/releases/latest/download/gunfollower-macos.tar.gz
+          commit-message: |
+            {{formulaName}} {{version}}
+
+            bump: Update gunfollower version
+        env:
+          COMMITTER_TOKEN: ${{ secrets.COMMITTER_TOKEN }}
