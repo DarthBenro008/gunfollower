@@ -16,7 +16,7 @@ impl FollowersDatabase {
                 FollowersDatabase { db }
             }
             None => {
-                let db: sled::Db = sled::open("gunfollower_db").unwrap();
+                let db: sled::Db = sled::open("gunfollower_db_v1").unwrap();
                 FollowersDatabase { db }
             }
         }
@@ -45,6 +45,28 @@ impl FollowersDatabase {
         }
     }
 
+    pub fn insert_following(&self, followers: FollowersList) -> Result<(), Error> {
+        self.insert_last_update_time()?;
+        let data = serde_json::to_string(&followers)?;
+        self.db.insert("following_data", data.as_bytes())?;
+        Ok(())
+    }
+
+    pub fn get_following(&self) -> Result<FollowersList, Error> {
+        match self.db.get("following_data")? {
+            Some(bytes) => match String::from_utf8(bytes.to_vec()) {
+                Ok(value) => {
+                    let followers_list: FollowersList = serde_json::from_str(&value)?;
+                    Ok(followers_list)
+                }
+                Err(_) => Err(Error::new(
+                    ErrorKind::Other,
+                    "Cannot fetch data from database",
+                )),
+            },
+            None => Err(Error::new(ErrorKind::Other, "Cannot fetch from database")),
+        }
+    }
     pub fn insert_username(&self, username: String) -> Result<(), Error> {
         self.db.insert("username_data", username.as_bytes())?;
         Ok(())
