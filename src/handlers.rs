@@ -5,6 +5,7 @@ use crate::printer::{
     print_followers_unfollowers, print_following_metric, print_following_unfollowing,
     print_follwers_metric, print_heading, print_ok,
 };
+use console::style;
 use dialoguer::{theme::ColorfulTheme, Confirm, Input};
 use std::error::Error;
 
@@ -133,4 +134,46 @@ fn generate_followers_url(username: String) -> String {
         "https://api.github.com/users/{username}/followers",
         username = username
     )
+}
+
+pub fn stats_handler(followers_db: &FollowersDatabase) -> Result<(), Box<dyn Error>> {
+    let data = followers_db.get_is_first();
+    match data {
+        Ok(_) => {
+            let followers = followers_db.get_following()?;
+            let following = followers_db.get_followers()?;
+            println!("{}", format!("{}_{}", &followers.len(), &following.len()));
+            return Ok(());
+        }
+        Err(_) => {
+            println!("{}", "err");
+            return Ok(());
+        }
+    }
+}
+
+pub fn shell_handler() -> Result<(), Box<dyn Error>> {
+    let script = String::from(
+        "function prompt_gunfollower() {
+    result=$(gunfollower stats)
+    if [[ \"$result\" == \"err\" ]]
+    then
+        p10k segment -f yellow -t \"logged out of gunfollower\"
+    else
+        my_arr=($(echo $result | sed 's/_/\n/g'))
+        p10k segment -i '' -b green -f black -t \"followers: ${my_arr[2]} / following: ${my_arr[1]}\"
+    fi
+  }
+",
+    );
+    println!(
+            "{}\n\n        {}\n        {}\n        {}\n\n{}\n\n{}",
+            style("Steps to add gunfollower p10k battery:").bold().underlined().green(),
+            style("* Open .p10k.zsh file").italic().cyan(),
+            style("* Copy the below function and paste it").italic().cyan(),
+            style("* Add gunfollower to either POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS or POWERLEVEL9K_LEFT_PROMPT_ELEMENTS").italic().cyan(),
+            style(&script),
+            style("If you are facing any issues, feel free to open an issue at https://github.com/DarthBenro008/gunfollower/issues").italic()
+        );
+    Ok(())
 }

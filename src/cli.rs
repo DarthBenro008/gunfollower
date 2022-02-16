@@ -25,4 +25,8 @@ pub enum Commands {
     Status,
     /// Clears the connected account and the followers database
     Clear,
+    /// Instructions on how to add p10K support
+    Shell,
+    /// Service for p10k stats
+    Stats,
 }

@@ -30,6 +30,14 @@ fn main() {
                 Ok(_) => {}
                 Err(err) => print_error("Failed to fetch status", &err),
             },
+            Commands::Shell => match shell_handler() {
+                Ok(_) => {}
+                Err(err) => print_error("Something went wrong", &err),
+            },
+            Commands::Stats => match stats_handler(&followers_db) {
+                Ok(_) => {}
+                Err(err) => print_error("Something went wrong", &err),
+            },
         },
         _ => match check_handler(&followers_db, &api) {
             Ok(_) => {}
