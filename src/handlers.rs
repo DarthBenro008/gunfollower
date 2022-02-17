@@ -143,11 +143,11 @@ pub fn stats_handler(followers_db: &FollowersDatabase) -> Result<(), Box<dyn Err
             let followers = followers_db.get_following()?;
             let following = followers_db.get_followers()?;
             println!("{}", format!("{}_{}", &followers.len(), &following.len()));
-            return Ok(());
+            Ok(())
         }
         Err(_) => {
-            println!("{}", "err");
-            return Ok(());
+            println!("err");
+            Ok(())
         }
     }
 }
