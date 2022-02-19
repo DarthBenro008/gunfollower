@@ -7,6 +7,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Releases]
 
+## [1.0.0] - 2022-02-19
+
+### Gunfollower v1.0 Release
+
+#### Features
+
+- Now you can also track people you are following from `gunfollower`!
+- You can add `p10k battery`, use the command `gunfollower shell` to learn more
+
+#### Contributors
+
+@DarthBenro008
+
 ## [0.1.4] - 2022-01-06
 
 ### Enable Gunfollower default command and enhanced CI
@@ -50,4 +63,3 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Uses sled db
 - Caching Mechansim
 - Smart status and logging status
-

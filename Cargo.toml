@@ -1,6 +1,6 @@
 [package]
 name = "gunfollower"
-version = "0.1.4"
+version = "1.0.0"
 authors = ["Hemanth Krishna <hkpdev008@gmail.com>"]
 license = "MIT"
 description = "Rust CLI to check who unfollows you on GitHub"
