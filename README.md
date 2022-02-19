@@ -39,6 +39,16 @@ You can also download the binary and install it manually.
 - Download the latest release of gunfollower specific to your OS.
 - If you are on Linux/MacOS, make sure you move the binary to somewhere in your `$PATH` (e.g. `/usr/local/bin`).
 
+
+## p10K Support
+
+Gunfollower also supports p10k shell! You can keep watch on your GitHub Followers and people you follow right from you shell.
+
+- Run `gunfollower shell` to learn more
+
+Here is the p10k battery in action
+
+![p10](assets/p10k.gif)
 ## Architecture
 
 ![GunfollowerArch](assets/arch.png)
